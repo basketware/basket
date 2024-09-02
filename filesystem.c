@@ -164,6 +164,8 @@ static int chdir_to_path() {
     }
 
     char *fs_read(const char *name, u32 *size) {
+        *size = 0;
+
         if (zip)
             return fs_read_zip(name, size);
 

@@ -2,8 +2,8 @@
 
 #define BASKET_INTERNAL
 #include "basket.h"
+#include <SDL2/SDL.h>
 #include <string.h>
-#include <math.h>
 
 static f32 to_rad(const f32 deg) {
 	return deg * 0.017453293f;
@@ -20,7 +20,7 @@ f32 lerp(f32 a, f32 b, f32 t) {
 void mat4_projection(f32 out[16], f32 fovy, f32 aspect, f32 near, f32 far, bool infinite) {
 	memset(out, 0, 16 * sizeof(f32));
 
-	f32 t = tanf(to_rad(fovy) / 2.0f);
+	f32 t = SDL_tanf(to_rad(fovy) / 2.0f);
 	f32 m22 = infinite ? 1.0f : -(far + near) / (far - near);
 	f32 m23 = infinite ? 2.0f * near : -(2.0f * far * near) / (far - near);
 	f32 m32 = -1.0f;
@@ -282,8 +282,8 @@ void mat4_from_angle_axis(f32 out[16], const f32 angle, const f32 axis[3]) {
 	const f32 l = vec_len(axis, 3);
 
     if (l > 0.0001f) {
-		const f32 c = cosf(angle);
-		const f32 s = sinf(angle);
+		const f32 c = SDL_cosf(angle);
+		const f32 s = SDL_sinf(angle);
 
 		const f32 x = axis[0] / l;
 		const f32 y = axis[1] / l;
@@ -337,7 +337,7 @@ f32 vec_dot(const f32 *a, const f32 *b, int len) {
 }
 
 f32 vec_len(const f32 *in, int len) {
-	return sqrtf(vec_dot(in, in, len));
+	return SDL_sqrtf(vec_dot(in, in, len));
 }
 
 void vec_min(f32 *out, const f32 *a, const f32 *b, int len) {

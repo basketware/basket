@@ -5,7 +5,7 @@
 
 #ifdef _WIN32
 #include <windows.h>
-#include <ShlObj.h>
+#include <shlobj.h>
 #else
 #include <fcntl.h>
 #include <unistd.h>

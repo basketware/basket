@@ -420,18 +420,18 @@ static f32 resolution[2];
 void ren_size(u16 *w, u16 *h) {
     if (enable_fill) {
         if (w != NULL)
-            *w = (u16)ceilf((f32)width /scale);
+            *w = (u16)SDL_ceilf((f32)width /scale);
 
         if (h != NULL)
-            *h = (u16)ceilf((f32)height/scale);
+            *h = (u16)SDL_ceilf((f32)height/scale);
         return;
     }
 
     if (w != NULL)
-        *w = (u16)ceilf((f32)target_w/scale);
+        *w = (u16)SDL_ceilf((f32)target_w/scale);
 
     if (h != NULL)
-        *h = (u16)ceilf((f32)target_h/scale);
+        *h = (u16)SDL_ceilf((f32)target_h/scale);
 }
 
 void ren_mouse_position(i16 *x, i16 *y) {
@@ -591,7 +591,7 @@ int ren_frame() {
         mat4_mulvec(position, light.position, view_matrix);
 
         f64 intensity = vec_len(light.color, 3);
-        f64 radius = sqrtf(intensity / 0.001f) - 0.8f;
+        f64 radius = SDL_sqrtf(intensity / 0.001f) - 0.8f;
 
         if (frustum_vs_sphere(frustum, position, sqrt(fmax(radius, 0.0f))) ) {
             memcpy(color, light.color, sizeof(light.color));

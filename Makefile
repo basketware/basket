@@ -1,13 +1,10 @@
-TARGET ?= native
-
 CC ?= gcc
 
-PKG-CONFIG ?= pkg-config
-LIBS ?= $(shell $(PKG-CONFIG) --libs sdl2)
+PKG_CONFIG ?= pkg-config
 
-OUT = out/$(TARGET)
+OUT ?= out/
 
-SOURCES := $(wildcard *.c)
+SOURCES := $(wildcard *.c) $(wildcard lib/*.c)
 OBJECTS := $(patsubst %.c,$(OUT)/%.o,$(SOURCES))
 
 DYN-EXT ?= .so
@@ -15,8 +12,12 @@ STATIC = $(OUT)/libbasket.a
 DYNAMIC = $(OUT)/libbasket$(DYN-EXT)
 
 # Compiler flags
-CFLAGS ?= -Wall -Wextra -pedantic
-CFLAGS += $(shell $(PKG-CONFIG) --cflags sdl2)
+CFLAGS ?= $(shell $(PKG_CONFIG) --cflags sdl2) -Wall -Wextra -pedantic -Ofast
+LDFLAGS += $(shell $(PKG_CONFIG) --libs sdl2)
+
+ifndef IGNORE_LIBM
+	LDFLAGS += -lm
+endif
 
 # Include directories
 INCLUDES = -Iinclude
@@ -35,12 +36,12 @@ $(STATIC): $(OBJECTS)
 # Rule for dynamic library
 $(DYNAMIC): $(OBJECTS)
 	@mkdir -p $(@D)
-	$(CC) -shared -o $@ $^ $(LIBS)
+	$(CC) $(LDFLAGS) -shared -o $@ $^ $(LIBS)
 
 # Rule for object files
 $(OUT)/%.o: %.c
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -fPIC -c $< -o $@
 
 # Clean rule
 clean:
