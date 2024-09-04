@@ -119,11 +119,6 @@ static int eng_headless(Application app) {
     if (ret)
         ERR_FATAL("couldn't get sdl2 to init.");
 
-    // filesystem.
-    ret = fs_init();
-    if (ret)
-        ERR_FATAL("couldn't init filesystem!");
-
     eng_tickrate(30);
 
     ENG_CALL_IF_VALID(app.init, app.userdata);
@@ -178,10 +173,6 @@ int eng_main(Application app, bool headless) {
   	);
     if (window == NULL)
         ERR_FATAL("can't initialize window\n%s", SDL_GetError());
-
-    // filesystem.
-    if (fs_init())
-        ERR_FATAL("couldn't init filesystem!\nget sure you didn't delete any files");
 
     // audio.
     if (aud_init())
