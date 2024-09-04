@@ -349,9 +349,10 @@ void pool_free(VertexPool* node);
         INP_LEFT,
         INP_RIGHT,
 
-        INP_ACTION,
-        INP_QUICK,
-        INP_MENU,
+        INP_A,
+        INP_B,
+        INP_X,
+        INP_Y,
 
         INP_MAX
     };
@@ -362,9 +363,10 @@ void pool_free(VertexPool* node);
         char ** left;
         char ** right;
 
-        char ** action;
-        char ** quick;
-        char ** menu;
+        char ** a;
+        char ** b;
+        char ** x;
+        char ** y;
     } RawBindings;
 
     #define MAX_BUTTONS 8

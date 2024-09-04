@@ -326,9 +326,10 @@ void inp_bind(RawBindings raw) {
     fill_action(INP_DOWN, raw.down, binding);
     fill_action(INP_LEFT, raw.left, binding);
     fill_action(INP_RIGHT, raw.right, binding);
-    fill_action(INP_ACTION, raw.action, binding);
-    fill_action(INP_QUICK, raw.quick, binding);
-    fill_action(INP_MENU, raw.menu, binding);
+    fill_action(INP_A, raw.a, binding);
+    fill_action(INP_B, raw.b, binding);
+    fill_action(INP_X, raw.x, binding);
+    fill_action(INP_Y, raw.y, binding);
 }
 
 Binding inp_current() {

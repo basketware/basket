@@ -201,9 +201,10 @@ int eng_main(Application app, bool headless) {
         .left   = (char *[]) {"a", 0},
         .right  = (char *[]) {"d", 0},
 
-        .action = (char *[]) {"j", "space", 0},
-        .quick  = (char *[]) {"k", 0},
-        .menu   = (char *[]) {"l", 0}
+        .a = (char *[]) {"j", "space", 0},
+        .b = (char *[]) {"k", 0},
+        .x = (char *[]) {"l", 0},
+        .y = (char *[]) {";", 0}
     });
 
     inp_bind((RawBindings) {
@@ -212,9 +213,10 @@ int eng_main(Application app, bool headless) {
         .left   = (char *[]) {"left" , 0},
         .right  = (char *[]) {"right", 0},
 
-        .action = (char *[]) {"z", "space", 0},
-        .quick  = (char *[]) {"x", 0},
-        .menu   = (char *[]) {"c", 0}
+        .a = (char *[]) {"z", "space", 0},
+        .b = (char *[]) {"x", 0},
+        .x = (char *[]) {"c", 0},
+        .y = (char *[]) {"v", 0},
     });
 
     inp_bind((RawBindings) {
@@ -223,9 +225,10 @@ int eng_main(Application app, bool headless) {
         .left   = (char *[]) {"gamepad:dpleft",  0},
         .right  = (char *[]) {"gamepad:dpright", 0},
 
-        .action = (char *[]) {"gamepad:a", 0},
-        .quick  = (char *[]) {"gamepad:b", 0},
-        .menu   = (char *[]) {"gamepad:x", 0}
+        .a = (char *[]) {"gamepad:a", 0},
+        .b = (char *[]) {"gamepad:b", 0},
+        .x = (char *[]) {"gamepad:x", 0},
+        .y = (char *[]) {"gamepad:y", 0}
     });
 
     eng_tickrate(30);

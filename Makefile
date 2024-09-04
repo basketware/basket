@@ -15,11 +15,7 @@ DYNAMIC = $(OUT)/libbasket$(DYN-EXT)
 CFLAGS ?= $(shell $(PKG_CONFIG) --cflags sdl2) -Wall -Wextra -pedantic -Ofast
 LDFLAGS += $(shell $(PKG_CONFIG) --libs sdl2)
 
-ifeq ($(OS),Windows_NT)
-	IGNORE_LIBM = yes
-endif
-
-ifneq ($(IGNORE_LIBM),)
+ifndef IGNORE_LIBM
 	LDFLAGS += -lm
 endif
 
