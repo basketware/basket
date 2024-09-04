@@ -91,19 +91,16 @@ static int chdir_to_path() {
         return 0;\
     }
 
-    int fs_init() {
-        // Check if BASKET_PACKAGE is not NULL
-        const char *name = getenv("BASKET_PACKAGE");
-
-        if (name != NULL) {
+    int fs_init(const char *package) {
+        if (package != NULL) {
             // If $BASKET_PACKAGE is a valid directory we can CD into
-            if (!chdir(name))
-                FOUND(name, "folder");
+            if (!chdir(package))
+                FOUND(package, "folder");
 
             // Try loading a zip file at $BASKET_PACKAGE
-            zip = zip_open(name, 0, 'r');
+            zip = zip_open(package, 0, 'r');
             if (zip)
-                FOUND(name, "bsk")
+                FOUND(package, "bsk")
         }
 
         if (chdir_to_path())

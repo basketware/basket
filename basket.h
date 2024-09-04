@@ -101,9 +101,7 @@ void err_fatal(const char *title, const char *format, ...);
     int sav_store(const char *data, u32 length);
     char *sav_retrieve(u32 *length);
 
-    #ifdef BASKET_INTERNAL
-        int fs_init();
-    #endif
+    int fs_init(const char *package);
 
 
 // MODEL.C //////////////////////////////////////////////////////
