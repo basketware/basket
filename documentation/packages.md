@@ -21,14 +21,14 @@ seemingly normal and innocent files! such as .mp3s, .pngs, .dlls, etc.
 - ### `int pak_mount(const char *name);`
   "Mounts" a Basket package for it to be read by `pak_read`
   - `name`: Either the path to a folder or a file containing zip data.
-  Returns: non-zero on error.
+  - Returns: non-zero on error.
 
 - ### `char *pak_read(const char* name, size_t *size);`
   Reads a file
   - `name`: The path to a certain file within the current open package.
   - `size`: A pointer to a `size_t` integer, set to zero on error, set to file
     size in success, ignored if `NULL` pointer.
-  Returns: `NULL` on error, a file body in success.
+  - Returns: `NULL` on error, a file body in success.
 
 
 ## Some examples
