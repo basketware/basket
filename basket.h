@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
 
 typedef double f64;
 typedef float f32;
@@ -26,11 +27,13 @@ typedef int8_t  i8;
 
     TODO:
     - Add several passes for rendering with different textures, setups, etc.
-    - Add full featured system API, with self-extractable features
     - Finish Audio API, make it comfier to use
     - Documentation
 */
 
+#ifdef BASKET_PLATFORM
+#define BASKET_INTERNAL
+#endif
 
 // General //////////////////////////////////////////////////////
     typedef union {
@@ -94,14 +97,15 @@ void err_fatal(const char *title, const char *format, ...);
 #endif
 
 
-// FILESYSTEM.C /////////////////////////////////////////////////
-    char *fs_read(const char *name, u32 *length);
+// PACKAGE.C ////////////////////////////////////////////////////
+    int pak_mount(const char *name);
+    char *pak_read(const char* name, size_t *size);
 
+
+// SAVEFILE.C ///////////////////////////////////////////////////
     int sav_identity(const char *identity);
     int sav_store(const char *data, u32 length);
     char *sav_retrieve(u32 *length);
-
-    int fs_init(const char *package);
 
 
 // MODEL.C //////////////////////////////////////////////////////
@@ -259,7 +263,6 @@ void err_fatal(const char *title, const char *format, ...);
 
 
 // POOL.C ///////////////////////////////////////////////////////
-
 typedef struct VertexPool VertexPool;
 
 struct VertexPool {
@@ -414,3 +417,5 @@ void pool_free(VertexPool* node);
     bool eng_is_debug(void);
 
     void eng_set_title(const char *title);
+
+    const char *eng_executable();

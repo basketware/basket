@@ -326,3 +326,46 @@ int eng_main(Application app, bool headless) {
 
     return ret;
 }
+
+#ifdef _WIN32
+    #include <windows.h>
+    #include <libloaderapi.h>
+    #define PATH_SEPARATOR '\\'
+#elif __APPLE__
+    #include <mach-o/dyld.h>
+#else
+    #define PATH_SEPARATOR '/'
+    #define __USE_XOPEN_EXTENDED
+    #include <unistd.h>
+#endif
+
+const char *eng_executable() {
+    static char resolved_path[1024];
+    static int found = 0;
+
+    if (!found) {
+        #ifdef _WIN32
+            GetModuleFileNameA(NULL, resolved_path, sizeof(resolved_path));
+
+        #elif __linux__
+            size_t s = readlink("/proc/self/exe", resolved_path, sizeof(resolved_path));
+            resolved_path[s] = 0;
+
+        #elif __FreeBSD__
+            size_t s = readlink("/proc/curproc/file", resolved_path, sizeof(resolved_path));
+            resolved_path[s] = 0;
+
+        #elif __APPLE__
+            size_t s = 0;
+            _NSGetExecutablePath(resolved_path, &s);
+
+        #else
+            #error "UNKNOWN PLATFORM!"
+
+        #endif
+
+        found = 1;
+    }
+
+    return resolved_path;
+}
