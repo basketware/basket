@@ -12,11 +12,17 @@ STATIC = $(OUT)/libbasket.a
 DYNAMIC = $(OUT)/libbasket$(DYN-EXT)
 
 # Compiler flags
-CFLAGS ?= $(shell $(PKG_CONFIG) --cflags sdl2) -Wall -Wextra -pedantic -Ofast
+CFLAGS ?= $(shell $(PKG_CONFIG) --cflags sdl2) -Wall -Wextra -pedantic
 LDFLAGS += $(shell $(PKG_CONFIG) --libs sdl2)
 
 ifndef IGNORE_LIBM
 	LDFLAGS += -lm
+endif
+
+ifdef DEBUG
+CFLAGS += -ggdb
+else
+CFLAGS += -Ofast -ffast-math
 endif
 
 # Include directories
