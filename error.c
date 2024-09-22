@@ -30,7 +30,7 @@ void err_init() {
 
 #ifdef _WIN32
     char temp_path[MAX_PATH];
-    if (!GetTempPathA(MAX_PATH, temp_path)) return ;
+    if (!GetTempPathA(MAX_PATH, temp_path)) return;
 
     snprintf(
         temp_path + strlen(temp_path),
@@ -60,11 +60,11 @@ void err_fatal(const char *title, const char *format, ...) {
 
     fprintf(stderr, "%s\n", message);
 
-    if (in_terminal()) return;
+    if (in_terminal()) exit(1);
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         fprintf(stderr, "SDL_Init Error: %s\n", SDL_GetError());
-        return;
+        exit(1);
     }
 
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title, message, NULL);
