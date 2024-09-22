@@ -2,20 +2,16 @@
 // it can only understand a super specific version of IQM files
 // because I cant bother to make it generalized.
 
+#include <SDL2/SDL_stdinc.h>
 #define BASKET_INTERNAL
 #include "basket.h"
+#include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define IQM_MAGIC "INTERQUAKEMODEL"
 #define IQM_VERSION 2
-
-char *string_dup(const char *string) {
-    char *out = malloc(strlen(string));
-    strcpy(out, string);
-    return out;
-}
 
 typedef struct {
     char magic[16];
@@ -235,7 +231,7 @@ bool iqm_init(Model *map, const char *data) {
                 IQMAnim a = rawanim[i];
 
                 Animation o = {
-                    .name  = string_dup(text + a.name),
+                    .name  = SDL_strdup(text + a.name),
                     .first = a.first_frame,
                     .last  = a.num_frames,
                     .rate  = a.framerate,
@@ -280,7 +276,7 @@ bool iqm_init(Model *map, const char *data) {
     }
 
     if (header.num_comment)
-        map->extra = string_dup(data+header.ofs_comment);
+        map->extra = SDL_strdup(data+header.ofs_comment);
 
     map->mesh = (MeshSlice) {
         vertices, animdata, vertex_amount, box
@@ -295,7 +291,7 @@ bool iqm_init(Model *map, const char *data) {
         IQMMesh mesh = meshes[i];
 
         map->submeshes[i] = (SubMesh) {
-            .name = string_dup(&data[header.ofs_text+mesh.name]),
+            .name = SDL_strdup(&data[header.ofs_text+mesh.name]),
             .range = { mesh.first_triangle, mesh.num_triangles }
         };
     }
