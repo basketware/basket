@@ -249,9 +249,10 @@ char *pak_read(const char* name, size_t *size) {
         return NULL;
 
     // Allocate buffer
-    char *buffer = (char*)malloc(file->size);
+    char *buffer = (char*)malloc(file->size+1);
     memcpy(buffer, file->data, file->size);
     *size = file->size;
+    buffer[file->size] = 0;
 
     mmap_file_close(file);
 
