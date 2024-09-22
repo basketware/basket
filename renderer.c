@@ -40,7 +40,7 @@ static tfx_uniform ambient_uniform;
 static tfx_uniform target_uniform;
 static tfx_uniform far_uniform;
 static tfx_uniform snap_uniform;
-static tfx_uniform dither_uniform;
+//static tfx_uniform dither_uniform;
 static tfx_uniform scale_uniform;
 static tfx_uniform lposition_uniform;
 static tfx_uniform lcolor_uniform;
@@ -294,7 +294,7 @@ int ren_init(SDL_Window *_window) {
     target_uniform   = tfx_uniform_new("target",     TFX_UNIFORM_VEC3,  1);
     far_uniform      = tfx_uniform_new("far",        TFX_UNIFORM_FLOAT, 1);
     snap_uniform     = tfx_uniform_new("snapping",   TFX_UNIFORM_INT,   1);
-    dither_uniform   = tfx_uniform_new("dither",     TFX_UNIFORM_INT,   1);
+    //dither_uniform   = tfx_uniform_new("dither",     TFX_UNIFORM_INT,   1);
     scale_uniform    = tfx_uniform_new("scale",      TFX_UNIFORM_INT,   1);
 
     lposition_uniform = tfx_uniform_new("light_positions", TFX_UNIFORM_VEC3, 16);
@@ -608,7 +608,7 @@ int ren_frame() {
     }
 
     tfx_set_uniform_int(&lamount_uniform, &real_index, -1);
-    tfx_set_uniform_int(&dither_uniform, (int *)&dithering, -1);
+    //tfx_set_uniform_int(&dither_uniform, (int *)&dithering, -1);
 
     tfx_set_state(TFX_STATE_RGB_WRITE | TFX_STATE_DEPTH_WRITE);
 
