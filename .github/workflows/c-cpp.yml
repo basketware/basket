@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - uses: actions/checkout@v4
-    - name: build
-      run: make
-
     - name: Cache APT Packages
       uses: awalsh128/cache-apt-pkgs-action@v1.4.2
       with:
         packages: libsdl2-dev xxd
+        
+    - uses: actions/checkout@v4
+    - name: build
+      run: make
               
     - name: Upload shared library
       uses: actions/upload-artifact@v3.2.1-node20
