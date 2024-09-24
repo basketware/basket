@@ -25,4 +25,4 @@ jobs:
       uses: actions/upload-artifact@v3.2.1-node20
       with:
         name: libbasket-x86_64.so 
-        path: libbasket.so
+        path: out/libbasket.so
