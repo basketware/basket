@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: build
       run: 
-        make shared
+        make dynamic
               
     - name: Upload shared library
       uses: actions/upload-artifact@v3.2.1-node20
