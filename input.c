@@ -20,6 +20,7 @@
 static u8 bindings_len = 0;
 static Binding bindings[MAX_BINDINGS];
 static u32 state[INP_MAX];
+static u32 key_state[INP_KEY_MAX];
 static u8 current;
 
 static char text[32];
@@ -113,10 +114,35 @@ void inp_event(SDL_Event event) {
     switch (event.type) {
         case SDL_KEYDOWN:
         case SDL_KEYUP: {
+            u32 scancode = event.key.keysym.scancode;
+
+            switch (scancode) {
+                case SDL_SCANCODE_LSHIFT:
+                case SDL_SCANCODE_RSHIFT:
+                    key_state[INP_KEY_SHIFT] = event.type == SDL_KEYDOWN;
+                    break;
+
+                case SDL_SCANCODE_LCTRL:
+                case SDL_SCANCODE_RCTRL:
+                    key_state[INP_KEY_CTRL] = event.type == SDL_KEYDOWN;
+                    break;
+
+                case SDL_SCANCODE_LALT:
+                case SDL_SCANCODE_RALT:
+                    key_state[INP_KEY_ALT] = event.type == SDL_KEYDOWN;
+                    break;
+
+                case SDL_SCANCODE_BACKSPACE:
+                    key_state[INP_KEY_BACKSPACE] = event.type == SDL_KEYDOWN;
+                    break;
+
+                case SDL_SCANCODE_RETURN:
+                    key_state[INP_KEY_RETURN] = event.type == SDL_KEYDOWN;
+                    break;
+            }
+
             if (event.key.repeat)
                 return;
-
-            u32 scancode = event.key.keysym.scancode;
 
             u32 bind = find_in_binding(bindings[current], scancode);
 
@@ -232,6 +258,10 @@ bool inp_update(f64 timestep) {
     for (u32 i = 0; i < INP_MAX; i++)
         if (state[i])
             state[i]++;
+
+    for (u32 i = 0; i < INP_KEY_MAX; i++)
+        if (key_state[i])
+            key_state[i]++;
 
     return false;
 }

@@ -86,8 +86,6 @@ typedef size_t usize;
 
         #define  alloc(type,n) (calloc(n,  sizeof(type)))
         #define falloc(type,n) (malloc(n * sizeof(type)))
-        #define min(a,b) (((a)<(b))?(a):(b))
-        #define max(a,b) (((a)>(b))?(a):(b))
     #endif
 
 // ERROR.C
@@ -230,8 +228,10 @@ void err_fatal(const char *title, const char *format, ...);
     #define QUICK_SCALE_MATRIX(x, y, z) { x, 0, 0, 0, 0, y, 0, 0, 0, 0, z, 0, 0, 0, 0, 1 }
     #define QUICK_TRANSLATION_MATRIX(x, y, z) { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, y, z, 1 }
 
-    f32 clamp(f32 v, f32 low, f32 high);
-    f32 lerp(f32 a, f32 b, f32 t);
+    #define min(a,b) (((a)<(b))?(a):(b))
+    #define max(a,b) (((a)>(b))?(a):(b))
+    #define clamp(v, low, high) (max(min(v, high), low))
+    #define lerp(a, b, t) ((a) * (1.0f - (t)) + (b) * (t))
 
     void mat4_projection(f32 out[16], f32 fovy, f32 aspect, f32 near, f32 far, bool infinite);
     void mat4_ortho(f32 out[16], f32 left, f32 right, f32 top, f32 bottom, f32 near, f32 far);
@@ -360,6 +360,18 @@ void pool_free(VertexPool* node);
         INP_MAX
     };
 
+    enum {
+        INP_KEY_NONE = 0,
+
+        INP_KEY_SHIFT,
+        INP_KEY_CTRL,
+        INP_KEY_ALT,
+        INP_KEY_BACKSPACE,
+        INP_KEY_RETURN,
+
+        INP_KEY_MAX
+    };
+
     typedef struct {
         char ** up;
         char ** down;
@@ -382,6 +394,7 @@ void pool_free(VertexPool* node);
 
     const char *inp_text(void);
     u32 inp_button(u8 button);
+    u32 inp_key(u8 key);
     bool inp_direction(f32 direction[2]);
     Binding inp_current(void);
     char *inp_from_code(u32 code);

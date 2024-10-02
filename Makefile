@@ -20,7 +20,10 @@ ifndef IGNORE_LIBM
 endif
 
 ifdef DEBUG
-CFLAGS += -ggdb -fsanitize=address
+CFLAGS += -ggdb
+ifndef IGNORE_LIBM
+LDFLAGS += -fsanitize=address
+endif
 else
 CFLAGS += -Ofast -ffast-math
 endif

@@ -9,14 +9,6 @@ static f32 to_rad(const f32 deg) {
 	return deg * 0.017453293f;
 }
 
-f32 clamp(f32 v, f32 low, f32 high) {
-	return max(min(v, high), low);
-}
-
-f32 lerp(f32 a, f32 b, f32 t) {
-	return a * (1.0f - t) + b * t;
-}
-
 void mat4_projection(f32 out[16], f32 fovy, f32 aspect, f32 near, f32 far, bool infinite) {
 	memset(out, 0, 16 * sizeof(f32));
 
