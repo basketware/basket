@@ -175,7 +175,7 @@ void ren_tex_bind(u8 main, u8 lumos) {
 
 static tfx_program shader(const char *raw, u32 size, const char *attribs[]) {
     // lazy
-    u32 final_length = size + basket_shaders__library_glsl_len + 48;
+    u32 final_length = size + shaders_library_glsl_len + 48;
     char *final_source = malloc(final_length);
 
     u32 len = 0;
@@ -184,7 +184,7 @@ static tfx_program shader(const char *raw, u32 size, const char *attribs[]) {
     if (compat_mode)
         PUSH_STR("#define COMPAT_MODE 1\n", 22)
 
-    PUSH_STR(basket_shaders__library_glsl, basket_shaders__library_glsl_len);
+    PUSH_STR(shaders_library_glsl, shaders_library_glsl_len);
 
     PUSH_STR("\n\n#line 0\n", 10);
 
@@ -273,9 +273,9 @@ int ren_init(SDL_Window *_window) {
         NULL
     };
 
-    program      = shader((char *)basket_shaders__shader_glsl, basket_shaders__shader_glsl_len, attribs);
-    out_program  = shader((char *)basket_shaders__output_glsl, basket_shaders__output_glsl_len, attribs);
-    quad_program = shader((char *)basket_shaders__quad_glsl,   basket_shaders__quad_glsl_len,   attribs);
+    program      = shader((char *)shaders_shader_glsl, shaders_shader_glsl_len, attribs);
+    out_program  = shader((char *)shaders_output_glsl, shaders_output_glsl_len, attribs);
+    quad_program = shader((char *)shaders_quad_glsl,   shaders_quad_glsl_len,   attribs);
 
 	vertex_format = tfx_vertex_format_start();
 	tfx_vertex_format_add(&vertex_format, 0, 3, false, TFX_TYPE_FLOAT); // Position

@@ -34,8 +34,8 @@ INCLUDES = -Iinclude
 # Default target
 all: static
 
-static: $(STATIC)
-dynamic: $(DYNAMIC)
+static: shader-collect $(STATIC)
+dynamic: shader-collect $(DYNAMIC)
 
 # Rule for static library
 $(STATIC): $(OBJECTS)
@@ -66,3 +66,10 @@ clean:
 $(OUT)/%.d: %.c
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) $(INCLUDES) -MM -MT '$(OUT)/$*.o $@' $< > $@
+
+shader-collect:
+	@rm shaders.h
+	@xxd -i shaders/library.glsl >> shaders.h
+	@xxd -i shaders/output.glsl >> shaders.h
+	@xxd -i shaders/quad.glsl >> shaders.h
+	@xxd -i shaders/shader.glsl >> shaders.h

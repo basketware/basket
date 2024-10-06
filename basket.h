@@ -213,6 +213,26 @@ void err_fatal(const char *title, const char *format, ...);
     void img_free(Image *image);
 
 
+// FONT.C ///////////////////////////////////////////////////////
+    // INFO: WORK IN PROGRESS!
+    typedef struct {
+        u32 character;
+        float advance;
+        MeshSlice slice;
+    } Glyph;
+
+    typedef struct {
+        Glyph *glyphs;
+        size_t fallback;
+        u32 characters;
+        float size;
+    } Font;
+
+    int fnt_init(Font *font, const char* data, u32 length, float size);
+    int fnt_free(Font *font);
+    void fnt_print(Font font, const char *text, Color color, f32 x, f32 y, f32 wrap);
+    void fnt_size(Font font, const char *text, f32 *w, f32 *h);
+
 // MAFS.C ///////////////////////////////////////////////////////
     typedef struct {
         f32 left[4];
